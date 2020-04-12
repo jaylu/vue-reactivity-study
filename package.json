@@ -1,0 +1,28 @@
+{
+  "name": "vue-reactivity-study",
+  "version": "1.0.0",
+  "description": "vue reactivity study",
+  "main": "index.js",
+  "scripts": {
+    "watch": "live-server --watch=web",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaylu/vue-reactivity-study.git"
+  },
+  "author": "Jay LU",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaylu/vue-reactivity-study/issues"
+  },
+  "homepage": "https://github.com/jaylu/vue-reactivity-study#readme",
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  },
+  "dependencies": {
+    "@babel/preset-env": "^7.9.5",
+    "babel-jest": "^25.3.0",
+    "jest": "^25.3.0"
+  }
+}
