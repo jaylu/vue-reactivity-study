@@ -17,26 +17,24 @@
 
     class Vue {
         constructor(options) {
+            this.$el = null
+            this.$data = null
             this.$options = options
             this.init();
         }
 
         init() {
             // prepare data
-            this.$mountSelector = ''
             this.$data = this.$options.data()
             Object.assign(this, this.$data)
-            this.$template = document.querySelector(this.$options.template).innerHTML
-            
+        
             // life cycle
             this.$options.created.apply(this)
-            setInterval(() => {
-              this.render()
-            }, 200)
         }
 
         render() {
-            this.$el = inflate(this.$template, this)
+            const template = document.querySelector(this.$options.template).innerHTML
+            this.$el = inflate(template, this)
             if (this.$mountSelector) {
                 document.querySelector(this.$mountSelector).innerHTML = this.$el
             }
