@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="./lib/lodash.min.js"></script>
+    <script src="./lib/vue.global.js"></script>
     <script src="./main.js"></script>
     <title>Demo</title>
     <style>
@@ -15,6 +16,12 @@
 </head>
 
 <body>
+
+    <script type="text/x-template" id="name-card">
+        <div> first name: {{firstName}} </div>
+        <div> last name: {{lastName}} </div>
+    </script>    
+
     <div id="app"></div>
 
     <script type="text/x-template" id="app-template">
