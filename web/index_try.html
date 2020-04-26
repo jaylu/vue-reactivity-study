@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="./index_try.js"></script>
     <title>Demo</title>
     <style>
         body {
@@ -17,32 +16,36 @@
 
     <script type="text/x-template" id="template">
         <div>
-            <div> first name: {{firstName}} </div>
-            <div> last name: {{lastName}} </div>
-            <div> age: {{age}}</div>
+            <div> price: {{price}} </div>
+            <div> quantity: {{quantity}}</div>
+            <div> total: {{total}}</div>
         </div>
     </script>
 
     <div id="app"></div>
 
-    <script>
+    <script type="module">
 
-        new Vue({
+        import Vue from './modules/simple-vue.js'
+
+        let vm = new Vue({
             template: '#template',
             data() {
                 return {
-                    firstName: 'Jay',
-                    lastName: 'LU',
-                    age: 16
+                    price: 10,
+                    quantity: 10
                 }
             },
-            created() {
-                setInterval(() => {
-                    this.age = Math.floor(Math.random() * 60)
-                    console.log(this)
-                }, 1000)
+            computed: {
+                total() {
+                    return this.price * this.quantity
+                }
             }
         }).$mount('#app')
+
+        setInterval(() => {
+            vm.price = Math.floor(Math.random() * 10)
+        }, 1000)
 
     </script>
 </body>

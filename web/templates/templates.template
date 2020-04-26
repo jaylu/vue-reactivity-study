@@ -1,0 +1,7 @@
+<script type="text/x-template" id="template">
+    <div>
+        <div> first name: {{firstName}} </div>
+        <div> last name: {{lastName}} </div>
+        <div> age: {{age}}</div>
+    </div>
+</script>
