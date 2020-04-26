@@ -5,7 +5,9 @@ import {
     computed,
     ref,
     isReactive,
-    isRef
+    isRef,
+    toRef,
+    toRefs
 } from "./reactive";
 
 describe('reactive', () => {
@@ -44,18 +46,68 @@ describe('reactive', () => {
         expect(isReactive(result)).toBeTruthy()
     });
 
+    it('reactive() - self++', () => {
+        const state = reactive({
+            foo: 1
+        })
+        const statePlus = computed(() => state.foo + 1)
+        expect(state.foo).toEqual(1)
+        expect(statePlus.value).toEqual(2)
+
+        state.foo++
+
+        expect(state.foo).toEqual(2)
+        expect(statePlus.value).toEqual(3)
+    });
+
     it('isReactive()', () => {
         const model = reactive({
             a: 'a'
         });
         expect(isReactive(model)).toBeTruthy()
-        expect(isReactive({a: 'a'})).toBeFalsy()
+        expect(isReactive({
+            a: 'a'
+        })).toBeFalsy()
     });
 
     it('ref()', () => {
         const price = ref(10)
         expect(price.value).toBe(10)
         expect(isRef(price)).toBe(true)
+    });
+
+    it('toRef()', () => {
+        const state = reactive({
+            foo: 1,
+            bar: 2
+        })
+
+        const fooRef = toRef(state, 'foo')
+
+        expect(fooRef.value).toEqual(1)
+
+        state.foo++
+        expect(fooRef.value).toEqual(2)
+
+        fooRef.value++
+        expect(state.foo).toEqual(3)
+    });
+
+    it('toRefs()', () => {
+        const state = reactive({
+            foo: 1,
+            bar: 2
+        })
+
+        const stateAsRefs = toRefs(state)
+        expect(stateAsRefs.foo.value).toEqual(1)
+        expect(stateAsRefs.bar.value).toEqual(2)
+
+        state.foo++
+        expect(stateAsRefs.foo.value).toEqual(2)
+
+        stateAsRefs.foo.value ++
+        expect(state.foo).toEqual(3)
     });
 
 

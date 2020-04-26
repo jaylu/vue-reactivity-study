@@ -1,4 +1,6 @@
-import {cloneDeep} from '../lib/lodash.js'
+import {
+    cloneDeep
+} from '../lib/lodash.js'
 
 export class Dep {
     constructor() {
@@ -25,7 +27,7 @@ export function reactive(target) {
     }
     Object.entries(target).forEach(([key, value]) => {
         const dep = new Dep()
-        let internalValue = typeof value === 'object' ? reactive(value): value
+        let internalValue = typeof value === 'object' ? reactive(value) : value
         Object.defineProperty(target, key, {
             enumerable: true,
             get() {
@@ -36,7 +38,7 @@ export function reactive(target) {
             },
             set(newValue) {
                 let oldValue = cloneDeep(internalValue)
-                internalValue = typeof newValue === 'object' ? reactive(newValue): newValue
+                internalValue = typeof newValue === 'object' ? reactive(newValue) : newValue
                 dep.notify(oldValue, newValue)
             }
         })
@@ -45,19 +47,41 @@ export function reactive(target) {
     return target
 }
 
-export function isReactive(obj) {
-    return obj !== null && obj !== undefined&& obj.__isReactive
+export function isReactive(object) {
+    return object !== null && object !== undefined && object.__isReactive
 }
 
 export function ref(initValue) {
-    let result = reactive({value:initValue})
+    let result = reactive({
+        value: initValue
+    })
     result.__isRef = true
     return result
 }
 
-export function isRef(obj) {
-    return obj !== null && obj !== undefined&& obj.__isRef
-} 
+export function isRef(object) {
+    return object !== null && object !== undefined && object.__isRef
+}
+
+export function toRef(object, key) {
+    return {
+        __isRef: true,
+        get value() {
+            return object[key]
+        },
+        set value(newValue) {
+            object[key] = newValue
+        }
+    }
+}
+
+export function toRefs(object) {
+    let result = {}
+    Object.keys(object).forEach((key) => {
+        result[key] = toRef(object, key)
+    })
+    return result
+}
 
 export function watchEffect(fn) {
     trackingFunction = fn
