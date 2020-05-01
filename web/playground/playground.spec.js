@@ -19,4 +19,22 @@ describe('playground', () => {
             b: 'b'
         })
     });
+
+    test('pointer', () => {
+        let a = {
+            a: 'a'
+        }
+
+        let old = a
+        a = {
+            a: 'b'
+        }
+
+        expect(a).toEqual({
+            a: 'b'
+        })
+        expect(old).toEqual({
+            a: 'a'
+        })
+    });
 });

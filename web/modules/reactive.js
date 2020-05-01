@@ -1,7 +1,3 @@
-import {
-    cloneDeep
-} from '../lib/lodash.js'
-
 export class Dep {
     constructor() {
         this.subscribers = []
@@ -37,7 +33,7 @@ export function reactive(target) {
                 return internalValue
             },
             set(newValue) {
-                let oldValue = cloneDeep(internalValue)
+                let oldValue = internalValue
                 internalValue = typeof newValue === 'object' ? reactive(newValue) : newValue
                 dep.notify(oldValue, newValue)
             }

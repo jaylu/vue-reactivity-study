@@ -11,7 +11,7 @@ import {
 } from "./reactive";
 
 describe('reactive', () => {
-    it('De class - can register and notify', () => {
+    it('class Dep - can register and notify', () => {
 
         let dep = new Dep()
 

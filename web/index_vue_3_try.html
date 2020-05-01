@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="./lib/vue.3.global.js"></script>
     <title>Demo</title>
     <style>
         body {
@@ -17,9 +16,9 @@
 
     <div id="app"></div>
 
-    <script>
+    <script type="module">
 
-        const {reactive, ref, computed, toRefs, createApp} = Vue
+        import {reactive, ref, computed, toRefs, createApp} from './modules/simple-vue.js'
 
         const vm = createApp({
             template: /*html*/`
