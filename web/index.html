@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+    <script src="./lib/vue.2.6.11.js"></script>
+    <style>
+        body {
+            font-size: 46px
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+<script>
+
+    let vm = new Vue({
+        template: /*html*/`
+            <div>
+                <div>price:  {{price}}</div>
+                <div>quantity: {{quantity}}</div>
+                <div>total:  {{total}}</div>
+            </div>
+        `,
+        data() {
+            return {
+                price: 11,
+                quantity: 12
+            }
+        },
+        computed: {
+            total() {
+                return this.price * this.quantity
+            }
+        }
+    }).$mount('#app')
+
+    setInterval(() => {
+        vm.price = Math.floor(Math.random() * 100)
+        vm.quantity = Math.floor(Math.random() * 10)
+    }, 1000)
+
+</script>
+
+
+</body>
+</html>
