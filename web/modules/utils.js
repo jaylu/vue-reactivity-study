@@ -15,6 +15,14 @@ export function get(object, key) {
     return currentValue
 }
 
+export function mapValue(object, fn) {
+    let newObject = {}
+    for (const key of Object.keys(object)) {
+        newObject[key] = fn(object[key])    
+    }
+    return newObject
+}
+
 export function inflate(template, model) {
     let result = template;
     const matches = [...template.matchAll(/{{(.*)}}/g)];

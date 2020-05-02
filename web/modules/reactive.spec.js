@@ -152,8 +152,8 @@ describe('reactive', () => {
         expect(watcherValue).toEqual('e')
 
         obj.b.d.e = 'x'
-        expect(callback).toHaveBeenCalledTimes(2)
         expect(watcherValue).toEqual('x')
+        expect(callback).toHaveBeenCalledTimes(2)
     });
 
     it('watchEffect() - replace object', () => {

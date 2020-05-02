@@ -1,4 +1,4 @@
-import { inflate, get, cloneDeep } from "./utils.js";
+import { inflate, get, cloneDeep, mapValue } from "./utils.js";
 
 describe('utils.js', () => {
 
@@ -31,7 +31,7 @@ describe('utils.js', () => {
         expect(result).toEqual('<div>Jay</div>')
     });
 
-    it('inflate() - multiple layer', () => {
+    test('inflate() - multiple layer', () => {
         const template = `<div>{{data.name}}</div>`
         const model = {
             data: {
@@ -40,5 +40,17 @@ describe('utils.js', () => {
         }
         const result = inflate(template, model)
         expect(result).toEqual('<div>Jay</div>')
+    });
+
+
+    test('mapValue()', () => {
+        const object = {
+            a: 'a',
+        } 
+
+        const newObject = mapValue(object, value => typeof value === 'string' ? value + '1': value)
+        
+        expect(newObject).not.toBe(object)
+        expect(newObject.a).toEqual('a1')
     });
 });
