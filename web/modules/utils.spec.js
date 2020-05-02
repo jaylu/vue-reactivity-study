@@ -1,4 +1,4 @@
-import { inflate, get, cloneDeep, mapValue } from "./utils.js";
+import {get, inflate, mapValue} from "./utils.js"
 
 describe('utils.js', () => {
 
@@ -11,7 +11,7 @@ describe('utils.js', () => {
                    e: 'e'
                }
            }
-       } 
+       }
 
        expect(get(object, 'a')).toEqual('a')
        expect(get(object, 'b.c')).toEqual('c')
@@ -46,10 +46,10 @@ describe('utils.js', () => {
     test('mapValue()', () => {
         const object = {
             a: 'a',
-        } 
+        }
 
         const newObject = mapValue(object, value => typeof value === 'string' ? value + '1': value)
-        
+
         expect(newObject).not.toBe(object)
         expect(newObject.a).toEqual('a1')
     });

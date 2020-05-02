@@ -1,10 +1,10 @@
-import { isRef } from "./reactive.js";
+import {isRef} from "./reactive.js"
 
 export function get(object, key) {
     if (!object && !key && (typeof key !== 'string')) {
         throw new Error('param not valid')
     }
-    const splits = key.split('.');
+    const splits = key.split('.')
     let currentValue = object
     for (const currentKey of splits) {
         currentValue = currentValue[currentKey]
@@ -18,24 +18,24 @@ export function get(object, key) {
 export function mapValue(object, fn) {
     let newObject = {}
     for (const key of Object.keys(object)) {
-        newObject[key] = fn(object[key])    
+        newObject[key] = fn(object[key])
     }
     return newObject
 }
 
 export function inflate(template, model) {
-    let result = template;
-    const matches = [...template.matchAll(/{{(.*)}}/g)];
-    const keys = matches.map(item => item[1]);
+    let result = template
+    const matches = [...template.matchAll(/{{(.*)}}/g)]
+    const keys = matches.map(item => item[1])
     keys.forEach((key) => {
-        let regex = new RegExp(`{{${key}}}`, 'g');
-        let value = get(model, key);
+        let regex = new RegExp(`{{${key}}}`, 'g')
+        let value = get(model, key)
         if (isRef(value)) {
             value = value.value
         }
-        result = result.replace(regex, value);
-    });
-    return result;
+        result = result.replace(regex, value)
+    })
+    return result
 }
 
 

@@ -20,11 +20,10 @@
   "homepage": "https://github.com/jaylu/vue-reactivity-study#readme",
   "devDependencies": {
     "@types/jest": "^25.2.1",
-    "live-server": "^1.2.1"
-  },
-  "dependencies": {
     "@babel/preset-env": "^7.9.5",
+    "live-server": "^1.2.1",
     "babel-jest": "^25.3.0",
     "jest": "^25.3.0"
-  }
+  },
+  "dependencies": {}
 }
