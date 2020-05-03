@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Demo</title>
-    <script src="./lib/vue.3.global.js"></script>
     <style>
         body {
             font-size: 46px
@@ -14,7 +13,7 @@
 <div id="app"></div>
 <script type="module">
 
-    const {reactive, createApp, computed} = Vue
+    import {reactive, createApp, computed} from './lib/main.js'
 
     let vm = createApp({
         template: /*html*/`

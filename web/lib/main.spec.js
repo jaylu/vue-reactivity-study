@@ -1,16 +1,6 @@
-import {
-    reactive,
-    Dep,
-    watchEffect,
-    computed,
-    ref,
-    isReactive,
-    isRef,
-    toRef,
-    toRefs
-} from "./reactive";
+import { computed, Dep, isReactive, isRef, reactive, ref, watchEffect } from './main.js'
 
-describe('reactive', () => {
+describe('main.js', function () {
     it('class Dep - can register and notify', () => {
 
         let dep = new Dep()
@@ -163,39 +153,4 @@ describe('reactive', () => {
         expect(total.value).toEqual(300)
     });
 
-    it('toRef()', () => {
-        const state = reactive({
-            foo: 1,
-            bar: 2
-        })
-
-        const fooRef = toRef(state, 'foo')
-
-        expect(fooRef.value).toEqual(1)
-
-        state.foo++
-        expect(fooRef.value).toEqual(2)
-
-        fooRef.value++
-        expect(state.foo).toEqual(3)
-    });
-
-    it('toRefs()', () => {
-        const state = reactive({
-            foo: 1,
-            bar: 2
-        })
-
-        const stateAsRefs = toRefs(state)
-        expect(stateAsRefs.foo.value).toEqual(1)
-        expect(stateAsRefs.bar.value).toEqual(2)
-
-        state.foo++
-        expect(stateAsRefs.foo.value).toEqual(2)
-
-        stateAsRefs.foo.value ++
-        expect(state.foo).toEqual(3)
-    });
-
-
-});
+})
