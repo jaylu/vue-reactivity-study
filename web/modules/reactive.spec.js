@@ -27,8 +27,8 @@ describe('reactive', () => {
         let raw = {
             quantity: 10
         }
-        const result = reactive(raw);
-        expect(result.quantity).toEqual(10)
+        const proxy = reactive(raw);
+        expect(proxy.quantity).toEqual(10)
     });
 
     it('reactive() - can define reactive and get deeper layer value', () => {
@@ -41,43 +41,42 @@ describe('reactive', () => {
                 }
             }
         }
-        const result = reactive(raw);
-        expect(result.b.d.e).toEqual('e')
-        expect(isReactive(result)).toBeTruthy()
+        const proxy = reactive(raw);
+        expect(proxy.b.d.e).toEqual('e')
+        expect(isReactive(proxy)).toBeTruthy()
     });
 
     it('isReactive()', () => {
-        const model = reactive({
+        const proxy = reactive({
             a: 'a'
         });
-        expect(isReactive(model)).toBeTruthy()
+        expect(isReactive(proxy)).toBeTruthy()
         expect(isReactive({
             a: 'a'
         })).toBeFalsy()
     });
 
     it('watchEffect() - single layer', () => {
-        const obj = reactive({
+        const proxy = reactive({
             a: 'a'
         });
 
         let callback = jest.fn()
-        let watcherValue
+        let watcherValue = null
         watchEffect(() => {
             callback()
-            watcherValue = obj.a
+            watcherValue = proxy.a
         })
         expect(callback).toHaveBeenCalledTimes(1)
         expect(watcherValue).toEqual('a')
 
-        obj.a = 'x'
+        proxy.a = 'x'
         expect(callback).toHaveBeenCalledTimes(2)
         expect(watcherValue).toEqual('x')
-        // expect(callback.mock.calls[1]).toBe([])
     });
 
     it('watchEffect() - deeper layer', () => {
-        const obj = reactive({
+        const proxy = reactive({
             a: 'a',
             b: {
                 c: 'c',
@@ -88,21 +87,21 @@ describe('reactive', () => {
         });
 
         let callback = jest.fn()
-        let watcherValue
+        let watcherValue = null
         watchEffect(() => {
             callback()
-            watcherValue = obj.b.d.e
+            watcherValue = proxy.b.d.e
         })
         expect(callback).toHaveBeenCalledTimes(1)
         expect(watcherValue).toEqual('e')
 
-        obj.b.d.e = 'x'
+        proxy.b.d.e = 'x'
         expect(watcherValue).toEqual('x')
         expect(callback).toHaveBeenCalledTimes(2)
     });
 
     it('watchEffect() - replace object', () => {
-        const obj = reactive({
+        const proxy = reactive({
             a: 'a',
             b: {
                 c: 'c',
@@ -110,17 +109,17 @@ describe('reactive', () => {
         });
 
         let callback = jest.fn()
-        let watcherValue
+        let watcherValue = null
         watchEffect(() => {
             callback()
-            watcherValue = obj.b
+            watcherValue = proxy.b
         })
         expect(callback).toHaveBeenCalledTimes(1)
         expect(watcherValue).toMatchObject({
             c: 'c',
         })
 
-        obj.b = {
+        proxy.b = {
             d: 'd'
         }
         expect(callback).toHaveBeenCalledTimes(2)
@@ -150,16 +149,16 @@ describe('reactive', () => {
     });
 
     it('computed()', () => {
-        const model = reactive({
+        const state = reactive({
             price: 20,
             quantity: 10
         })
 
-        const total = computed(() => model.price * model.quantity)
+        const total = computed(() => state.price * state.quantity)
         expect(total.value).toEqual(200)
         expect(isRef(total)).toBeTruthy()
 
-        model.price = 30
+        state.price = 30
         expect(total.value).toEqual(300)
     });
 

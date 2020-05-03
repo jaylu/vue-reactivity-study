@@ -38,8 +38,13 @@ export function reactive(object) {
             }
         })
     }
+
     reactiveObject.__isReactive = true
     return reactiveObject
+}
+
+export function isReactive(object) {
+    return object && object.__isReactive
 }
 
 export function watchEffect(fn) {
@@ -48,34 +53,11 @@ export function watchEffect(fn) {
     trackingFunction = null
 }
 
-export function isReactive(object) {
-    return object && object.__isReactive;
-}
-
-export function ref(value) {
-    let refObject = reactive({
-        value
-    })
-    refObject.__isRef = true
-    return refObject
-}
-
-export function isRef(object){
-    return object && object.__isRef
-}
-
-export function computed(fn) {
-    let reference = ref()
-    watchEffect(() => {
-        reference.value = fn()
-    })
-    return reference
-}
-
-export function createApp(option) {
-    let {template, setup} = option
+export function createApp(options) {
+    let {template, setup} = options
     let model = setup()
-    const render = selector => {
+
+    function render(selector) {
         let dom = document.querySelector(selector)
         if (dom) {
             dom.innerHTML = inflate(template, model)
@@ -92,8 +74,26 @@ export function createApp(option) {
     }
 
     return {
-        ...model,
         mount
     }
 }
 
+export function ref(value) {
+    let result = reactive({
+        value
+    })
+    result.__isRef = true
+    return result
+}
+
+export function isRef(object) {
+    return object && object.__isRef
+}
+
+export function computed(fn) {
+    let reference = ref()
+    watchEffect(() => {
+        reference.value = fn()
+    })
+    return reference
+}

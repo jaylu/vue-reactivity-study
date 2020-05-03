@@ -1,7 +1,4 @@
-import { Dep, isReactive, reactive, watchEffect, isRef, ref, computed} from './main.js'
-
-describe('main', function () {
-
+describe('reactive', () => {
     it('class Dep - can register and notify', () => {
 
         let dep = new Dep()
@@ -78,7 +75,7 @@ describe('main', function () {
         });
 
         let callback = jest.fn()
-        let watcherValue
+        let watcherValue = null
         watchEffect(() => {
             callback()
             watcherValue = proxy.b.d.e
@@ -100,7 +97,7 @@ describe('main', function () {
         });
 
         let callback = jest.fn()
-        let watcherValue
+        let watcherValue = null
         watchEffect(() => {
             callback()
             watcherValue = proxy.b
@@ -118,7 +115,6 @@ describe('main', function () {
             d: 'd'
         })
     });
-
 
     it('ref()', () => {
         const price = ref(10)
@@ -153,4 +149,40 @@ describe('main', function () {
         state.price = 30
         expect(total.value).toEqual(300)
     });
-})
+
+    it('toRef()', () => {
+        const state = reactive({
+            foo: 1,
+            bar: 2
+        })
+
+        const fooRef = toRef(state, 'foo')
+
+        expect(fooRef.value).toEqual(1)
+
+        state.foo++
+        expect(fooRef.value).toEqual(2)
+
+        fooRef.value++
+        expect(state.foo).toEqual(3)
+    });
+
+    it('toRefs()', () => {
+        const state = reactive({
+            foo: 1,
+            bar: 2
+        })
+
+        const stateAsRefs = toRefs(state)
+        expect(stateAsRefs.foo.value).toEqual(1)
+        expect(stateAsRefs.bar.value).toEqual(2)
+
+        state.foo++
+        expect(stateAsRefs.foo.value).toEqual(2)
+
+        stateAsRefs.foo.value ++
+        expect(state.foo).toEqual(3)
+    });
+
+
+});
