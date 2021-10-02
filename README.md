@@ -4,7 +4,12 @@ vue reactivity study
 
 # description
 
-* try implement `reactive`, `ref`, `computed`, `watchEffect` within 100 line of code.
+* try implement `reactive`, `ref`, `computed`, `watchEffect` within 100+ line of code.
+
+Files
+
+* `/web/lib/main.js` contains the main logic
+* `/web/lib/main.spec.js` is the unit test
 
 ## local run
 
