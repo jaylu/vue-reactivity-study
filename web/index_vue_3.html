@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Demo</title>
@@ -10,42 +11,47 @@
         }
     </style>
 </head>
+
 <body>
-<div id="app"></div>
-<script type="module">
+    <div id="app"></div>
+    <script type="module">
 
-    const {reactive, createApp, computed} = Vue
+        const { reactive, createApp, computed } = Vue
 
-    let vm = createApp({
-        template: /*html*/`
+        let vm = createApp({
+            template: /*html*/`
             <div>
                 <div>price:  {{model.price}}</div>
                 <div>quantity: {{model.quantity}}</div>
                 <div>total:  {{total}}</div>
             </div>
         `,
-        setup() {
-            const model = reactive({
-                price: 12,
-                quantity: 10
-            })
-            const total = computed(() => {
-                return model.price * model.quantity
-            })
-            return {
-                model,
-                total
+            setup() {
+
+                // 这里使用了`reactive`定义了响应式的数据
+                const model = reactive({
+                    price: 12,
+                    quantity: 10
+                })
+                const total = computed(() => {
+                    return model.price * model.quantity
+                })
+                return {
+                    model,
+                    total
+                }
             }
-        }
-    }).mount('#app')
+        }).mount('#app')
 
-    setInterval(() => {
-        vm.model.price = Math.floor(Math.random() * 100)
-        vm.model.quantity = Math.floor(Math.random() * 10)
-    }, 1000)
+        // 每一秒刷新一次model的值，这样最终会触发视图更新
+        setInterval(() => {
+            vm.model.price = Math.floor(Math.random() * 100)
+            vm.model.quantity = Math.floor(Math.random() * 10)
+        }, 1000)
 
-</script>
+    </script>
 
 
 </body>
+
 </html>

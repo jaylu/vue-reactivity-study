@@ -1,4 +1,4 @@
-import { Dep, reactive, isReactive, watchEffect, ref, isRef, computed } from './main'
+import { Dep, reactive, isReactive, watchEffect, ref, isRef, computed } from './main.js'
 
 describe('main', function () {
     it('class Dep - can register and notify', () => {
